@@ -14,7 +14,7 @@
 
 	// Set *default* container specific settings.json values on container create.
 	"settings": { 
-		"terminal.integrated.shell.linux": "/bin/bash",
+		"terminal.integrated.shell.linux": "/bin/zsh",
 		"python.pythonPath": "/usr/local/bin/python",
 		"python.linting.enabled": true,
 		"python.linting.pylintEnabled": true,
@@ -36,11 +36,13 @@
 		"ms-azuretools.vscode-docker"
 	],
 
-	"postCreateCommand": [
-		"pip3 install -r requirements.txt",
-		"apt-get update && apt-get -y install x11-xserver-utils",
-		"xhost + 127.0.0.1"
-	],
+	// "initializeCommand": [
+	// 	"xhost", "+ 127.0.0.1"
+	// ],
+
+	// "postCreateCommand": [
+	// 	"pip3 install -r requirements.txt"
+	// ],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
