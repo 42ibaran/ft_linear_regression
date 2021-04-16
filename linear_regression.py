@@ -4,7 +4,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from customErrors import EmptyDataError, InvalidFlagError
+from custom_errors import EmptyDataError, InvalidFlagError
+from logger import * 
 
 ### TODO
 # error management
@@ -30,14 +31,21 @@ class Model():
         if flag == EMPTY:
             return
         elif flag == WITH_TRAINING_DATA:
-            with open(TRAINING_RESULT_FILENAME, "rb") as fi:
-                self.m, self.b, self.mean, self.std = pickle.load(fi)
+            try:
+                with open(TRAINING_RESULT_FILENAME, "rb") as fi:
+                    self.m, self.b, self.mean, self.std = pickle.load(fi)
+            except FileNotFoundError:
+                log.error("Training data file (%s) not found." % TRAINING_RESULT_FILENAME)
+                exit(1)
         else:
             raise InvalidFlagError("Invalid initialization flag provided.")
 
     def set_training_data(self, x, y):
         self.x = x
         self.y = y
+
+        if len(self.x) == 0 or len(self.y) == 0:
+            raise EmptyDataError("Data you provided is empty. \x46\x75\x63\x6b\x20\x79\x6f\x75\x2e")
 
     def feature_scale_normalize(self):
         if self.x is None or self.y is None:

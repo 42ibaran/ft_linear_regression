@@ -1,11 +1,15 @@
-import linearRegression as lr
-from customErrors import ModelNotTrainedError
+import linear_regression as lr
+from custom_errors import ModelNotTrainedError
+from logger import * 
+
+model = lr.Model(lr.WITH_TRAINING_DATA)
+
+milage = input("Provide milage: ")
 
 try:
-    model = lr.Model(lr.WITH_TRAINING_DATA)
-except FileNotFoundError:
-    print("File with training data doesn't exist")
+    milage = int(milage)
+except ValueError as e:
+    log.error("Invalid milage value.")
     exit(1)
 
-milage = float(input("Provide milage: "))
 print(int(model.predict(milage)))

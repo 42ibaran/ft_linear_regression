@@ -36,13 +36,9 @@
 		"ms-azuretools.vscode-docker"
 	],
 
-	// "initializeCommand": [
-	// 	"xhost", "+ 127.0.0.1"
-	// ],
-
-	// "postCreateCommand": [
-	// 	"pip3 install -r requirements.txt"
-	// ],
+	"postStartCommand": [
+		"pip3 install -r requirements.txt"
+	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
