@@ -33,7 +33,9 @@
 	"extensions": [
 		"ms-python.python",
 		"geddski.macros",
-		"ms-azuretools.vscode-docker"
+		"ms-azuretools.vscode-docker",
+		"streetsidesoftware.code-spell-checker",
+		"janisdd.vscode-edit-csv"
 	],
 
 	"postStartCommand": [
