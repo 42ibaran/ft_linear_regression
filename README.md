@@ -2,6 +2,12 @@
 
 42 Project: ML algorithm to predict car price based on its milage.
 
+## Setup
+I'll write a Dockerfile later but for now use `pip` to install dependencies:
+```
+pip3 install -r requirements.txt
+```
+
 ## Usage
 Project is divided into 2 parts: training and prediction programs.
 ### Training
