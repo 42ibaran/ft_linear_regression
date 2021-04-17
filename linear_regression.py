@@ -25,6 +25,7 @@ class Model():
     b = 0
     mean = 0
     std = 1
+    error = []
 
     # Y = m * X + b
     def __init__(self, flag=EMPTY):
@@ -67,10 +68,17 @@ class Model():
             self.m -= (LEARNING_RATE / len(self.x)) * np.sum(error * self.x)
             self.b -= (LEARNING_RATE / len(self.x)) * error.sum()
 
+            self.error.append(-error.sum() / len(self.x))
+
     def guess(self, x):
         return self.m * x + self.b
 
     def plot(self):
+        # _, ax = plt.subplots()
+        # ax.plot(range(TRAIN_ITER), self.error, 'b-')
+        # plt.grid()
+        # plt.show()
+
         if self.x is None or self.y is None:
             raise EmptyDataError("Can't plot empty data.")
 
@@ -82,6 +90,7 @@ class Model():
         xSpaces = np.linspace(xDenorm.min(), xDenorm.max(), 2)
         ySpaces = (self.m / self.std) * (xSpaces - self.mean) + self.b
         ax.plot(xSpaces, ySpaces, 'b-')
+        plt.grid()
         plt.show()
 
     def save(self):
