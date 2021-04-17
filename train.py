@@ -6,8 +6,6 @@ import linear_regression as lr
 from custom_errors import EmptyDataError
 from logger import * 
 
-log.basicConfig(format='%(levelname)s: %(message)s', level=log.WARN)
-
 parser = argparse.ArgumentParser()
 parser.add_argument("filename", type=str)
 args = parser.parse_args()

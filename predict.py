@@ -8,7 +8,7 @@ milage = input("Provide milage: ")
 
 try:
     milage = int(milage)
-except ValueError as e:
+except ValueError:
     log.error("Invalid milage value.")
     exit(1)
 

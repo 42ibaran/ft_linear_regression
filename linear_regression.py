@@ -47,13 +47,16 @@ class Model():
         if len(self.x) == 0 or len(self.y) == 0:
             raise EmptyDataError("Data you provided is empty. \x46\x75\x63\x6b\x20\x79\x6f\x75\x2e")
 
+    def value_normalize(self, x):
+        return (x - self.mean) / self.std
+
     def feature_scale_normalize(self):
         if self.x is None or self.y is None:
             raise EmptyDataError("Can't normalize empty data.")
 
         self.mean = self.x.mean()
         self.std = self.x.std()
-        self.x = (self.x - self.mean) / self.std
+        self.x = self.value_normalize(self.x)
 
     def train(self):
         if self.x is None or self.y is None:
@@ -71,11 +74,14 @@ class Model():
         if self.x is None or self.y is None:
             raise EmptyDataError("Can't plot empty data.")
 
-        _, ax = plt.subplots()
-        ax.plot(self.x, self.y, 'b.')
+        xDenorm = self.x * self.std + self.mean
 
-        xSpaces = np.linspace(self.x.min(), self.x.max(), 100)
-        ax.plot(xSpaces, self.m * xSpaces + self.b, 'b-')
+        _, ax = plt.subplots()
+        ax.plot(xDenorm, self.y, 'b.')
+
+        xSpaces = np.linspace(xDenorm.min(), xDenorm.max(), 2)
+        ySpaces = (self.m / self.std) * (xSpaces - self.mean) + self.b
+        ax.plot(xSpaces, ySpaces, 'b-')
         plt.show()
 
     def save(self):
@@ -83,5 +89,5 @@ class Model():
             pickle.dump((self.m, self.b, self.mean, self.std), fi)
 
     def predict(self, x):
-        xNorm = (x - self.mean) / self.std
-        return self.guess(xNorm)
+        x = self.value_normalize(x)
+        return self.guess(x)
