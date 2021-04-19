@@ -7,9 +7,6 @@ import matplotlib.pyplot as plt
 from custom_errors import InvalidDataError, InvalidFlagError
 from logger import * 
 
-### TODO
-# error management
-
 TRAIN_ITER = 1000
 LEARNING_RATE = 0.01
 TRAINING_RESULT_FILENAME = "training_data.pk"
