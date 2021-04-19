@@ -19,9 +19,11 @@ Then, you can run the container like so:
 docker run -it --rm ft_linear_regression
 ```
 In the container all dependencies are installed. However you might have problems with plotting the data due to display forwarding. To make it work (for Mac, not sure about Linux, moreover Windows) make sure that XQuartz is running and connection from remote clients is allowed:
-![alt text][logo]
 
-[logo]: https://raw.githubusercontent.com/42ibaran/ft_linear_regression/master/readme_img/xquartz_setting.png "XQuartz settings"
+<p align="center">
+  <img src="https://raw.githubusercontent.com/42ibaran/ft_linear_regression/master/readme_img/xquartz_setting.png">
+</p>
+
 Then on the host run:
 ```
 xhost + 127.0.0.1
