@@ -18,7 +18,7 @@ Then, you can run the container like so:
 ```
 docker run -it --rm ft_linear_regression
 ```
-In the container, all dependencies are installed. However, you might have problems with plotting the data due to display forwarding. To make it work (for Mac, not sure about Linux, moreover Windows) make sure that XQuartz is running and connection from remote clients is allowed:
+In the container, all dependencies are installed. However, you might have problems with plotting the data due to display forwarding. To make it work (for Mac, not Windows, for Ubuntu see below) make sure that XQuartz is running and connection from remote clients is allowed:
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/42ibaran/ft_linear_regression/master/readme_img/xquartz_setting.png">
@@ -29,6 +29,13 @@ Then on the host run:
 xhost + 127.0.0.1
 ```
 to allow window forwarding from localhost. That should do it.
+
+On Ubuntu what might work is if you run:
+```
+xhost + local:root
+docker run -it --rm --env="DISPLAY" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" ft_linear_regression 
+```
+Not sure about other Linux systems. Sorry 😢
 
 ### With VSCode
 I kept `.devcontainer` directory with a setup for development using VSCode Remote Development extension. You can reopen the project directory using the extension, similarly to using Docker container but with more functionality.
