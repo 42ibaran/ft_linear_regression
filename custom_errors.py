@@ -1,4 +1,4 @@
-class EmptyDataError(Exception):
+class InvalidDataError(Exception):
     pass
 
 class ModelNotTrainedError(Exception):

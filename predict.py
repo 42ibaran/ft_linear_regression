@@ -12,4 +12,9 @@ except ValueError:
     log.error("Invalid milage value.")
     exit(1)
 
-print(int(model.predict(milage)))
+try:
+    prediction = model.predict(milage)
+    print(int(prediction))
+except ValueError:
+    log.error("Unable to predict, try training again.")
+    exit(1)

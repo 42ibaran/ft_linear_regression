@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from custom_errors import EmptyDataError, InvalidFlagError
+from custom_errors import InvalidDataError, InvalidFlagError
 from logger import * 
 
 ### TODO
@@ -46,14 +46,18 @@ class Model():
         self.y = y
 
         if len(self.x) == 0 or len(self.y) == 0:
-            raise EmptyDataError("Data you provided is empty. \x46\x75\x63\x6b\x20\x79\x6f\x75\x2e")
+            raise InvalidDataError("Data you provided is empty. \x46\x75\x63\x6b\x20\x79\x6f\x75\x2e")
+        elif np.isnan(x).any() or np.isnan(y).any():
+            raise InvalidDataError("Data you provided sucks.")
 
     def value_normalize(self, x):
+        if self.std == 0:
+            raise ValueError("Standard deviation is 0. Check your training data.")
         return (x - self.mean) / self.std
 
     def feature_scale_normalize(self):
         if self.x is None or self.y is None:
-            raise EmptyDataError("Can't normalize empty data.")
+            raise InvalidDataError("Can't normalize empty data.")
 
         self.mean = self.x.mean()
         self.std = self.x.std()
@@ -61,7 +65,7 @@ class Model():
 
     def train(self):
         if self.x is None or self.y is None:
-            raise EmptyDataError("Can't train on empty data.")
+            raise InvalidDataError("Can't train on empty data.")
 
         for _ in range(TRAIN_ITER):
             error = self.guess(self.x) - self.y
@@ -74,13 +78,8 @@ class Model():
         return self.m * x + self.b
 
     def plot(self):
-        # _, ax = plt.subplots()
-        # ax.plot(range(TRAIN_ITER), self.error, 'b-')
-        # plt.grid()
-        # plt.show()
-
         if self.x is None or self.y is None:
-            raise EmptyDataError("Can't plot empty data.")
+            raise InvalidDataError("Can't plot empty data.")
 
         xDenorm = self.x * self.std + self.mean
 
@@ -89,13 +88,17 @@ class Model():
 
         xSpaces = np.linspace(xDenorm.min(), xDenorm.max(), 2)
         ySpaces = (self.m / self.std) * (xSpaces - self.mean) + self.b
-        ax.plot(xSpaces, ySpaces, 'b-')
+        ax.plot(xSpaces, ySpaces, 'r-')
+        ax.legend(['Dataset points', 'Prediction function'])
+        ax.set_xlabel('Milage, km')
+        ax.set_ylabel('Price')
         plt.grid()
         plt.show()
 
     def save(self):
         with open(TRAINING_RESULT_FILENAME, "wb") as fi:
             pickle.dump((self.m, self.b, self.mean, self.std), fi)
+            log.info("Training result saved successfully.")
 
     def predict(self, x):
         x = self.value_normalize(x)

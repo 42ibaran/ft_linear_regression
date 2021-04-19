@@ -3,17 +3,18 @@ import numpy as np
 import pandas as pd
 
 import linear_regression as lr
-from custom_errors import EmptyDataError
+from custom_errors import InvalidDataError
 from logger import * 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("filename", type=str)
+parser.add_argument("-p", help="plot the data after training", action='store_true')
 args = parser.parse_args()
 
 try:
     df = pd.read_csv(args.filename)
-except FileNotFoundError:
-    log.error("Data file (%s) not found." % args.filename)
+except:
+    log.error("Data file (%s) not found or invalid csv file." % args.filename)
     exit(1)
 
 try:
@@ -28,9 +29,12 @@ model = lr.Model()
 try:
     model.set_training_data(x, y)
     model.feature_scale_normalize()
-    model.train()
-    model.save()
-    model.plot()
-except EmptyDataError as e:
+except (InvalidDataError, ValueError) as e:
     log.error(e)
     exit(1)
+
+model.train()
+model.save()
+
+if args.p:
+    model.plot()
