@@ -4,16 +4,16 @@ from logger import *
 
 model = lr.Model(lr.WITH_TRAINING_DATA)
 
-milage = input("Provide milage: ")
+mileage = input("Provide mileage: ")
 
 try:
-    milage = int(milage)
+    mileage = int(mileage)
 except ValueError:
-    log.error("Invalid milage value.")
+    log.error("Invalid mileage value.")
     exit(1)
 
 try:
-    prediction = model.predict(milage)
+    prediction = model.predict(mileage)
     print(int(prediction))
 except ValueError:
     log.error("Unable to predict, try training again.")

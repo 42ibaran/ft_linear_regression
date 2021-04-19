@@ -1,6 +1,6 @@
 # ft_linear_regression
 
-42 Project: Machine learning algorithm to predict car price based on its milage. Model uses linear regression with gradient descent. 
+42 Project: Machine learning algorithm to predict car price based on its mileage. The model uses linear regression with gradient descent. 
 
 ## Setup
 ### Locally
@@ -18,7 +18,7 @@ Then, you can run the container like so:
 ```
 docker run -it --rm ft_linear_regression
 ```
-In the container all dependencies are installed. However you might have problems with plotting the data due to display forwarding. To make it work (for Mac, not sure about Linux, moreover Windows) make sure that XQuartz is running and connection from remote clients is allowed:
+In the container, all dependencies are installed. However, you might have problems with plotting the data due to display forwarding. To make it work (for Mac, not sure about Linux, moreover Windows) make sure that XQuartz is running and connection from remote clients is allowed:
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/42ibaran/ft_linear_regression/master/readme_img/xquartz_setting.png">
@@ -38,11 +38,11 @@ To run training program, run:
 ```
 python train.py [-p] resources/data.csv
 ```
-After the execution a file `training_data.pk` with the result of the training is created. It is used to retrieve coefficients for prediction program later on.
+After the execution, a file `training_data.pk` with the result of the training is created. It is used to retrieve coefficients for the prediction program later on.
 
 
 To run prediction program, use this:
 ```
 python predict.py
 ```
-It will load the result of the training, prompt you for milage input and give a prediction of the price. 
+It will load the result of the training, prompt you for mileage input and give a prediction of the price. 

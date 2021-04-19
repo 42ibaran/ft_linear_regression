@@ -90,7 +90,7 @@ class Model():
         ySpaces = (self.m / self.std) * (xSpaces - self.mean) + self.b
         ax.plot(xSpaces, ySpaces, 'r-')
         ax.legend(['Dataset points', 'Prediction function'])
-        ax.set_xlabel('Milage, km')
+        ax.set_xlabel('Mileage, km')
         ax.set_ylabel('Price')
         plt.grid()
         plt.show()
