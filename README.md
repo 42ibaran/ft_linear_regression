@@ -30,7 +30,7 @@ xhost + 127.0.0.1
 ```
 to allow window forwarding from localhost. That should do it.
 
-### VSCode
+### With VSCode
 I kept `.devcontainer` directory with a setup for development using VSCode Remote Development extension. You can reopen the project directory using the extension, similarly to using Docker container but with more functionality.
 
 ## Usage
