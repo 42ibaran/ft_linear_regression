@@ -2,7 +2,7 @@ import linear_regression as lr
 from custom_errors import ModelNotTrainedError
 from logger import * 
 
-model = lr.Model(lr.WITH_TRAINING_DATA)
+model = lr.Model(lr.FROM_BINARY)
 
 mileage = input("Provide mileage: ")
 

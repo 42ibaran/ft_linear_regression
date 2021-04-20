@@ -11,7 +11,7 @@ TRAIN_ITER = 1000
 LEARNING_RATE = 0.01
 TRAINING_RESULT_FILENAME = "training_data.pk"
 
-WITH_TRAINING_DATA = 1
+FROM_BINARY = 1
 EMPTY = 2
 
 class Model():
@@ -28,7 +28,7 @@ class Model():
         """Initialize model instance. Either empty or using binary file with training result."""
         if flag == EMPTY:
             return
-        elif flag == WITH_TRAINING_DATA:
+        elif flag == FROM_BINARY:
             try:
                 with open(TRAINING_RESULT_FILENAME, "rb") as fi:
                     self.m, self.b, self.mean, self.std = pickle.load(fi)
