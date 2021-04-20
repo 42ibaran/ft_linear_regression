@@ -45,7 +45,10 @@ class Model():
 
         if len(self.x) == 0 or len(self.y) == 0:
             raise InvalidDataError("Data you provided is empty. \x46\x75\x63\x6b\x20\x79\x6f\x75\x2e")
-        elif np.isnan(x).any() or np.isnan(y).any():
+        try:
+            if np.isnan(x).any() or np.isnan(y).any():
+                raise InvalidDataError("Data you provided sucks.")
+        except TypeError:
             raise InvalidDataError("Data you provided sucks.")
 
     def value_normalize(self, x):
