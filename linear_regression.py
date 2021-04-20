@@ -22,10 +22,10 @@ class Model():
     b = 0
     mean = 0
     std = 1
-    error = []
 
     # Y = m * X + b
     def __init__(self, flag=EMPTY):
+        """Initialize model instance. Either empty or using binary file with training result."""
         if flag == EMPTY:
             return
         elif flag == WITH_TRAINING_DATA:
@@ -39,6 +39,7 @@ class Model():
             raise InvalidFlagError("Invalid initialization flag provided.")
 
     def set_training_data(self, x, y):
+        """Set the data used for training."""
         self.x = x
         self.y = y
 
@@ -48,11 +49,13 @@ class Model():
             raise InvalidDataError("Data you provided sucks.")
 
     def value_normalize(self, x):
+        """Standardize one value."""
         if self.std == 0:
             raise ValueError("Standard deviation is 0. Check your training data.")
         return (x - self.mean) / self.std
 
     def feature_scale_normalize(self):
+        """Standardize training data."""
         if self.x is None or self.y is None:
             raise InvalidDataError("Can't normalize empty data.")
 
@@ -61,6 +64,7 @@ class Model():
         self.x = self.value_normalize(self.x)
 
     def train(self):
+        """Fit the model to data."""
         if self.x is None or self.y is None:
             raise InvalidDataError("Can't train on empty data.")
 
@@ -69,12 +73,12 @@ class Model():
             self.m -= (LEARNING_RATE / len(self.x)) * np.sum(error * self.x)
             self.b -= (LEARNING_RATE / len(self.x)) * error.sum()
 
-            self.error.append(-error.sum() / len(self.x))
-
     def guess(self, x):
+        """Create a hypothesis."""
         return self.m * x + self.b
 
     def plot(self):
+        """Create scatterplot of the dataset and prediction function."""
         if self.x is None or self.y is None:
             raise InvalidDataError("Can't plot empty data.")
 
@@ -93,10 +97,12 @@ class Model():
         plt.show()
 
     def save(self):
+        """Save the result of training into a binary file."""
         with open(TRAINING_RESULT_FILENAME, "wb") as fi:
             pickle.dump((self.m, self.b, self.mean, self.std), fi)
             log.info("Training result saved successfully.")
 
     def predict(self, x):
+        """Create a hypothesis based on a not normalized value."""
         x = self.value_normalize(x)
         return self.guess(x)
