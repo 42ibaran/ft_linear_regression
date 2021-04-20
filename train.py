@@ -8,7 +8,7 @@ from logger import *
 
 parser = argparse.ArgumentParser()
 parser.add_argument("filename", type=str)
-parser.add_argument("-p", help="plot the data after training", action='store_true')
+parser.add_argument("-p", help="plot data after training", action='store_true')
 args = parser.parse_args()
 
 try:
