@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from custom_errors import InvalidDataError, InvalidFlagError
 from logger import * 
 
-TRAIN_ITER = 1000
+TRAINING_ITER = 1000
 LEARNING_RATE = 0.01
 TRAINING_RESULT_FILENAME = "training_data.pk"
 
@@ -71,7 +71,7 @@ class Model():
         if self.x is None or self.y is None:
             raise InvalidDataError("Can't train on empty data.")
 
-        for _ in range(TRAIN_ITER):
+        for _ in range(TRAINING_ITER):
             error = self.guess(self.x) - self.y
             self.m -= (LEARNING_RATE / len(self.x)) * np.sum(error * self.x)
             self.b -= (LEARNING_RATE / len(self.x)) * error.sum()
