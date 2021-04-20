@@ -22,6 +22,7 @@ class Model():
     b = 0
     mean = 0
     std = 1
+    errors = []
 
     # Y = m * X + b
     def __init__(self, flag=EMPTY):
@@ -31,10 +32,13 @@ class Model():
         elif flag == FROM_BINARY:
             try:
                 with open(TRAINING_RESULT_FILENAME, "rb") as fi:
-                    self.m, self.b, self.mean, self.std = pickle.load(fi)
+                    try:
+                        self.m, self.b, self.mean, self.std = pickle.load(fi)
+                    except:
+                        log.error("Binary file (%s) is invalid." % TRAINING_RESULT_FILENAME)
+                        exit(1)
             except FileNotFoundError:
-                log.error("Training data file (%s) not found." % TRAINING_RESULT_FILENAME)
-                exit(1)
+                log.warning("Training data file (%s) not found. Proceeding with no training result." % TRAINING_RESULT_FILENAME)
         else:
             raise InvalidFlagError("Invalid initialization flag provided.")
 
@@ -75,12 +79,20 @@ class Model():
             error = self.guess(self.x) - self.y
             self.m -= (LEARNING_RATE / len(self.x)) * np.sum(error * self.x)
             self.b -= (LEARNING_RATE / len(self.x)) * error.sum()
+            self.errors.append(error.sum() / len(self.x))
 
     def guess(self, x):
         """Create a hypothesis."""
         return self.m * x + self.b
 
     def plot(self):
+        _, ax = plt.subplots()
+        ax.plot(range(TRAINING_ITER), self.errors, 'r-')
+        ax.legend(['Error evolution'])
+        ax.set_xlabel('Number of iterations')
+        ax.set_ylabel('Error')
+        plt.grid()
+
         """Create scatterplot of the dataset and prediction function."""
         if self.x is None or self.y is None:
             raise InvalidDataError("Can't plot empty data.")
