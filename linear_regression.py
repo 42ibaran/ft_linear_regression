@@ -48,12 +48,12 @@ class Model():
         self.y = y
 
         if len(self.x) == 0 or len(self.y) == 0:
-            raise InvalidDataError("Data you provided is empty. \x46\x75\x63\x6b\x20\x79\x6f\x75\x2e")
+            raise InvalidDataError("Data you provided is empty.")
         try:
             if np.isnan(x).any() or np.isnan(y).any():
-                raise InvalidDataError("Data you provided sucks.")
+                raise InvalidDataError("Data you provided is incomplete.")
         except TypeError:
-            raise InvalidDataError("Data you provided sucks.")
+            raise InvalidDataError("Data you provided is incomplete.")
 
     def value_normalize(self, x):
         """Standardize one value."""
